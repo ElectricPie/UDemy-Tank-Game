@@ -40,5 +40,6 @@ ATank* ATankAIController::GetControlledTank() const
 
 ATank * ATankAIController::GetPlayerTank() const
 {
-	return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	return Cast<ATank>(GetWorld()->GetFirstPlayerController());
+	
 }
