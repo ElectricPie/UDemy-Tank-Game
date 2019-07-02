@@ -25,4 +25,7 @@ public:
 
 	//Moves the Barrel to align with the crosshair
 	void AimTowardsCrosshair();
+
+private:
+	bool GetSightRayHitLocation(FVector& hitLocation) const;
 };
