@@ -31,6 +31,8 @@ private:
 
 	bool GetSightRayHitLocation(FVector& hitLocation) const;
 
+	bool GetLookDirection(FVector2D screenLocation, FVector& worldDirection) const;
+
 	//Moves the Barrel to align with the crosshair
 	void AimTowardsCrosshair();
 };
