@@ -29,9 +29,14 @@ private:
 	UPROPERTY(EditAnywhere)
 	float m_crosshairYLocation = 0.33f;
 
+	UPROPERTY(EditAnywhere)
+	float m_lineTraceRange = 1000000;
+
 	bool GetSightRayHitLocation(FVector& hitLocation) const;
 
 	bool GetLookDirection(FVector2D screenLocation, FVector& worldDirection) const;
+
+	bool GetLookVectorHitLocation(FVector &outHitLocation, FVector lookDirection) const;
 
 	//Moves the Barrel to align with the crosshair
 	void AimTowardsCrosshair();
