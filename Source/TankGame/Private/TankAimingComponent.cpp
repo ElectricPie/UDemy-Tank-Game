@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "GameFramework/Actor.h"
+#include "Components/StaticMeshComponent.h"
 #include "TankAimingComponent.h"
 
 // Sets default values for this component's properties
@@ -13,6 +14,11 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+
+void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * barrelToSet)
+{
+	m_barrel = barrelToSet;
+}
 
 // Called when the game starts
 void UTankAimingComponent::BeginPlay()
@@ -32,10 +38,9 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector hitLocation)
+void UTankAimingComponent::AimAt(FVector hitLocation, float launchSpeed)
 {
 	auto ourTankName = GetOwner()->GetName();
-
-	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *ourTankName, *hitLocation.ToString())
+	UE_LOG(LogTemp, Warning, TEXT("%s firing at %f"), *ourTankName, launchSpeed)
 }
 
