@@ -2,6 +2,7 @@
 
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "TankAimingComponent.h"
 
 // Sets default values for this component's properties
@@ -40,7 +41,33 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UTankAimingComponent::AimAt(FVector hitLocation, float launchSpeed)
 {
-	auto ourTankName = GetOwner()->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s firing at %f"), *ourTankName, launchSpeed)
+	//Returns if no barrel is found
+	if (!m_barrel)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s is missing barrel"))
+		return;
+	}
+
+
+	FVector outLaunchVelocity;
+	//Attempts to get the socket location with provided name, otherwises gets barrel location
+	FVector startLocation = m_barrel->GetSocketLocation(FName("Projectile"));
+
+	if (UGameplayStatics::SuggestProjectileVelocity(
+			this,
+			outLaunchVelocity,
+			startLocation,
+			hitLocation,
+			launchSpeed,
+			false,
+			0.0f,
+			0.0f,
+			ESuggestProjVelocityTraceOption::DoNotTrace)) 
+	{
+		auto ourTankName = GetOwner()->GetName();
+		auto aimDirection = outLaunchVelocity.GetSafeNormal();
+		UE_LOG(LogTemp, Warning, TEXT("%s firing at %s"), *ourTankName, *aimDirection.ToString())
+	}
+	
 }
 
